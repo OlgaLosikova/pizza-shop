@@ -23,7 +23,10 @@ body {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    font-weight: 800;
+    font-size: 38px;
+    margin-top: 60px;
+    margin-bottom: 50px;
   }
 
   &__items {
@@ -145,7 +148,9 @@ body {
       }
     }
   }
-
+  .content__item {
+    display: block;
+  }
   &__item {
     display: flex;
     width: 100%;

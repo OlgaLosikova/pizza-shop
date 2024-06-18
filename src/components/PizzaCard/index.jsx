@@ -45,7 +45,7 @@ export default function PizzaCard({ title, price, imgUrl, sizes, types }) {
               />
             </svg>
             <span>Добавить</span>
-            <i></i>
+            <i>0</i>
           </div>
         </div>
       </div>

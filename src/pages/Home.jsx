@@ -7,6 +7,8 @@ export default function Home() {
   const baseUrl = 'https://6671410ce083e62ee43abe0a.mockapi.io/items';
   const [pizza, setPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [categoryId, setCategoryId] = useState(0);
+  const [sortType, setSortType] = useState(0);
 
   useEffect(() => {
     fetch(baseUrl)
@@ -17,12 +19,13 @@ export default function Home() {
         setPizza(arr);
         setIsLoading(false);
       });
+    window.scrollTo(0, 0);
   }, []);
   return (
-    <>
+    <div className="container">
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories value={categoryId} onClickCategory={(id) => setCategoryId(id)} />
+        <Sort sortType={sortType} setSortType={setSortType} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -39,6 +42,6 @@ export default function Home() {
               />
             ))}
       </div>
-    </>
+    </div>
   );
 }
