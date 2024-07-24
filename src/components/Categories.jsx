@@ -1,4 +1,4 @@
-export default function Categories({ value, onClickCategory }) {
+export default function Categories({ categoryId, onClickCategory }) {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
@@ -8,7 +8,7 @@ export default function Categories({ value, onClickCategory }) {
           <li
             key={categorie}
             onClick={() => onClickCategory(index)}
-            className={value === index ? 'active' : ''}>
+            className={categoryId === index ? 'active' : ''}>
             {categorie}
           </li>
         ))}
