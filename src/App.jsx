@@ -5,9 +5,9 @@ import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
 import { Route, Routes } from 'react-router-dom';
 import { createContext, useState } from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
 export const SearchContext = createContext();
-console.log(SearchContext);
+
 function App() {
   const [searchValue, setSearchValue] = useState('');
   return (

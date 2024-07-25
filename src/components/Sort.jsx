@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSortType } from '../store/slices/filterSlice';
+const sortItems = [
+  { name: 'популярности (DESC)', sortProperty: 'rating' },
+  { name: 'популярности (ASC)', sortProperty: '-rating' },
+  { name: 'цене (DESC)', sortProperty: 'price' },
+  { name: 'цене (ASC)', sortProperty: '-price' },
+  { name: 'алфавиту (DESC)', sortProperty: 'title' },
+  { name: 'алфавиту (ASC)', sortProperty: '-title' },
+];
 
-export default function Sort({ sortType, setSortType }) {
-  const sortItems = [
-    { name: 'популярности (DESC)', sortProperty: 'rating' },
-    { name: 'популярности (ASC)', sortProperty: '-rating' },
-    { name: 'цене (DESC)', sortProperty: 'price' },
-    { name: 'цене (ASC)', sortProperty: '-price' },
-    { name: 'алфавиту (DESC)', sortProperty: 'title' },
-    { name: 'алфавиту (ASC)', sortProperty: '-title' },
-  ];
+export default function Sort() {
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
+
   const [isVisible, setIsVisible] = useState(false);
 
   const handleSelect = (index) => {
-    setSortType(index);
+    dispatch(setSortType(index));
     setIsVisible(false);
   };
   return (
@@ -30,7 +35,7 @@ export default function Sort({ sortType, setSortType }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{sortType.name}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{sort.name}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
@@ -39,7 +44,7 @@ export default function Sort({ sortType, setSortType }) {
               <li
                 key={sortItem.name}
                 onClick={() => handleSelect(sortItem)}
-                className={sortType.sortProperty === sortItem.sortProperty ? 'active' : ''}>
+                className={sort.sortProperty === sortItem.sortProperty ? 'active' : ''}>
                 {sortItem.name}
               </li>
             ))}
