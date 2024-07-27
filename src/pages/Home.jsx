@@ -79,16 +79,7 @@ export default function Home() {
     }
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
-  const pizzas = pizza.map((pizza) => (
-    <PizzaCard
-      key={pizza.id}
-      title={pizza.title}
-      price={pizza.price}
-      imgUrl={pizza.imageUrl}
-      sizes={pizza.sizes}
-      types={pizza.types}
-    />
-  ));
+  const pizzas = pizza.map((pizza) => <PizzaCard key={pizza.id} {...pizza} />);
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
   return (
     <div className="container">

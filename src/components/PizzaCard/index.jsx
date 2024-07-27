@@ -1,12 +1,24 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart } from '../../store/slices/cartSlice';
 
-export default function PizzaCard({ title, price, imgUrl, sizes, types }) {
+export default function PizzaCard({ id, title, price, imageUrl, sizes, types }) {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
+  const typeNames = ['тонкое', 'традиционное'];
+
+  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const addedCount = cartItem ? cartItem.count : 0;
+  const dispatch = useDispatch();
+  const handleAddPizza = () => {
+    const item = { id, title, price, imageUrl, type: typeNames[activeType], size: activeSize };
+
+    dispatch(addItemToCart(item));
+  };
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imgUrl} alt="Pizza" />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -15,7 +27,7 @@ export default function PizzaCard({ title, price, imgUrl, sizes, types }) {
                 onClick={() => setActiveType(type)}
                 key={type}
                 className={activeType === type ? 'active' : ''}>
-                {type === 0 ? 'тонкое' : 'традиционное'}
+                {typeNames[type]}
               </li>
             ))}
           </ul>
@@ -44,8 +56,8 @@ export default function PizzaCard({ title, price, imgUrl, sizes, types }) {
                 fill="white"
               />
             </svg>
-            <span>Добавить</span>
-            <i>0</i>
+            <span onClick={handleAddPizza}>Добавить</span>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </div>
         </div>
       </div>
