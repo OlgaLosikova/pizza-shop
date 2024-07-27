@@ -11,7 +11,14 @@ export default function PizzaCard({ id, title, price, imageUrl, sizes, types }) 
   const addedCount = cartItem ? cartItem.count : 0;
   const dispatch = useDispatch();
   const handleAddPizza = () => {
-    const item = { id, title, price, imageUrl, type: typeNames[activeType], size: activeSize };
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typeNames[activeType],
+      size: sizes[activeSize],
+    };
 
     dispatch(addItemToCart(item));
   };
