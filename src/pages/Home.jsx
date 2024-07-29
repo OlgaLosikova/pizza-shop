@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext, useRef } from 'react';
-import axios from 'axios';
+import { useEffect, useContext, useRef } from 'react';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategotyId, setCurrentPage, setFilters } from '../store/slices/filterSlice';
+import { fetchData } from '../store/slices/pizzaSlice';
 import Categories from '../components/Categories';
 import Sort, { sortItems } from '../components/Sort';
 import PizzaCard from '../components/PizzaCard';
@@ -18,10 +18,10 @@ export default function Home() {
   const isMounted = useRef(false);
 
   const { searchValue } = useContext(SearchContext);
-  const baseUrl = 'https://6671410ce083e62ee43abe0a.mockapi.io/items';
-  const [pizza, setPizza] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+  const { items, status } = useSelector((state) => state.pizza);
+
   const dispatch = useDispatch();
 
   const onClickCategory = (id) => {
@@ -30,36 +30,39 @@ export default function Home() {
   const onChangePage = (number) => {
     dispatch(setCurrentPage(number));
   };
-  //get-запрос для получения пицц
-  const fetchPizza = () => {
-    setIsLoading(true);
 
+  const fetchPizza = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.sortProperty.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
-    axios
-      .get(
-        `${baseUrl}?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((response) => {
-        setPizza(response.data);
-        setIsLoading(false);
-      });
+
+    dispatch(
+      fetchData({
+        order,
+        sortBy,
+        category,
+        search,
+        currentPage,
+      }),
+    );
   };
 
   //Если был первый рендер и изменили параметры url, вшиваем параметры в url
   useEffect(() => {
     if (isMounted.current) {
-      const queryString = qs.stringify({
+      const params = {
+        categoryId: categoryId > 0 ? categoryId : null,
         sortProperty: sort.sortProperty,
-        categoryId,
         currentPage,
-      });
-      navigate(`?${queryString}`);
+      };
+      const queryString = qs.stringify(params, { skipNulls: true });
+      navigate(`/?${queryString}`);
     }
-    isMounted.current = true;
-  }, [categoryId, sort.sortProperty, currentPage]);
+    if (window.location.search) {
+      fetchPizza();
+    }
+  }, []);
 
   //Если был первый рендер, то проверяем существуют ли url параметры и сохраняем в редаксе
   useEffect(() => {
@@ -69,7 +72,7 @@ export default function Home() {
       dispatch(setFilters({ ...params, sort }));
       isSearch.current = true;
     }
-  }, []);
+  }, [categoryId, sort.sortProperty, currentPage]);
 
   //Если был первый рендер запрашиваем пиццы
   useEffect(() => {
@@ -79,7 +82,7 @@ export default function Home() {
     }
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
-  const pizzas = pizza.map((pizza) => <PizzaCard key={pizza.id} {...pizza} />);
+  const pizzas = items.map((item) => <PizzaCard key={item.id} {...item} />);
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
   return (
     <div className="container">
@@ -88,7 +91,14 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка</h2>
+          <p>Попробуйте зайти сюда позднее</p>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+      )}
       <Pagination page={currentPage} onChangePage={(number) => onChangePage(number)} />
     </div>
   );

@@ -21,7 +21,11 @@ body {
 
 .content {
   padding: 40px 0;
-
+  &__error-info {
+    color: $gray-line;
+    margin: 100px auto;
+    text-align: center;
+  }
   &__title {
     font-weight: 800;
     font-size: 38px;
