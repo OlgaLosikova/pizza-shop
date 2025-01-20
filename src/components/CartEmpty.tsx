@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 
-export default function CartEmpty({ id, title, price, count, imageUrl, type }) {
+export default function CartEmpty() {
   return (
     <>
       <div className="cart cart--empty">
         <h2>Корзина пустая</h2>
-        <icon>😩</icon>
+        <span>😩</span>
         <p>
           Вероятно вы не заказали еще пиццу.
           <br /> Чтобы сделать заказ перейдите на главную страницу

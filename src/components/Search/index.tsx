@@ -9,21 +9,21 @@ const Search = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const updateSearchValue = useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 500),
     [],
   );
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: any) => {
     setValue(e.target.value);
     updateSearchValue(e.target.value);
   };
   const handleCleanInput = () => {
     setValue('');
     dispatch(setSearchValue(''));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (

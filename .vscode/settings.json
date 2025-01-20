@@ -1,7 +1,8 @@
-{"window.zoomLevel": 1,
+{
+  "window.zoomLevel": 1,
   "editor.snippetSuggestions": "top",
 
-	// Настройки Prettier
+  // Настройки Prettier
   "prettier.tabWidth": 2,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
@@ -9,11 +10,11 @@
   "prettier.jsxBracketSameLine": true,
   "prettier.printWidth": 100,
 
-	// Настройки ESLint
+  // Настройки ESLint
   "eslint.packageManager": "yarn",
   "eslint.format.enable": true,
   "eslint.alwaysShowStatus": true,
-	"editor.formatOnSave": true,
+  "editor.formatOnSave": true,
 
   "emmet.triggerExpansionOnTab": true,
 
@@ -24,13 +25,13 @@
   "editor.renderWhitespace": "selection",
   "editor.minimap.enabled": false,
   "editor.fontFamily": "'Fira Code', Consolas, 'Courier New', monospace",
-	// Если шрифт поддерживает стрелочки и т.п. знаки, то включить их (лигатуры)
-	"editor.fontLigatures": true,
+  // Если шрифт поддерживает стрелочки и т.п. знаки, то включить их (лигатуры)
+  "editor.fontLigatures": true,
   // Тип курсора
-	"editor.cursorStyle": "line",
-	// Тип анимации курсора
+  "editor.cursorStyle": "line",
+  // Тип анимации курсора
   "editor.cursorBlinking": "phase",
-	// Плавная анимация
+  // Плавная анимация
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -67,5 +68,5 @@
   "workbench.colorCustomizations": {},
   "workbench.startupEditor": "welcomePage",
   "breadcrumbs.enabled": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

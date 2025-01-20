@@ -2,8 +2,16 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart, selectCartItemById } from '../../store/slices/cartSlice';
 
-export default function PizzaCard({ id, title, price, imageUrl, sizes, types }) {
-  const [activeType, setActiveType] = useState(0);
+type PizzaCardProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+const PizzaCard: React.FC<PizzaCardProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+  const [activeType, setActiveType] = useState<number>(0);
   const [activeSize, setActiveSize] = useState(0);
   const typeNames = ['тонкое', 'традиционное'];
 
@@ -29,7 +37,7 @@ export default function PizzaCard({ id, title, price, imageUrl, sizes, types }) 
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((type) => (
+            {types.map((type: number) => (
               <li
                 onClick={() => setActiveType(type)}
                 key={type}
@@ -70,4 +78,5 @@ export default function PizzaCard({ id, title, price, imageUrl, sizes, types }) 
       </div>
     </div>
   );
-}
+};
+export default PizzaCard;

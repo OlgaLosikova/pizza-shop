@@ -16,7 +16,7 @@ import PizzaCard from '../components/PizzaCard';
 import PizzaSkeleton from '../components/PizzaCard/Skeleton';
 import Pagination from '../components/Pagination';
 
-export default function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -26,20 +26,21 @@ export default function Home() {
 
   const dispatch = useDispatch();
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategotyId(id));
   };
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
   const fetchPizza = () => {
-    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
+    const order: string = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.sortProperty.replace('-', '');
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      //@ts-ignore
       fetchData({
         order,
         sortBy,
@@ -84,12 +85,22 @@ export default function Home() {
     }
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
-  const pizzas = items.map((item) => <PizzaCard key={item.id} {...item} />);
+  const pizzas = items.map(
+    (item: {
+      id: number;
+
+      title: string;
+      price: number;
+      imageUrl: string;
+      sizes: number[];
+      types: number[];
+    }) => <PizzaCard key={item.id} {...item} />,
+  );
   const skeletons = [...new Array(6)].map((_, index) => <PizzaSkeleton key={index} />);
   return (
     <div className="container">
       <div className="content__top">
-        <Categories categoryId={categoryId} onClickCategory={(id) => onClickCategory(id)} />
+        <Categories categoryId={categoryId} onClickCategory={(id: number) => onClickCategory(id)} />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -101,7 +112,8 @@ export default function Home() {
       ) : (
         <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
       )}
-      <Pagination page={currentPage} onChangePage={(number) => onChangePage(number)} />
+      <Pagination page={currentPage} onChangePage={(number: number) => onChangePage(number)} />
     </div>
   );
-}
+};
+export default Home;
