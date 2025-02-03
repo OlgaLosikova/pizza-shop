@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSortType } from '../store/slices/filterSlice';
 type SortItem = {
   name: string;
   sortProperty: string;
 };
+
 export const sortItems: SortItem[] = [
   { name: 'популярности (DESC)', sortProperty: 'rating' },
   { name: 'популярности (ASC)', sortProperty: '-rating' },
@@ -26,8 +27,10 @@ export default function Sort() {
     setIsVisible(false);
   };
   useEffect(() => {
-    const handleClickOutside = (e:any) => {
-      if (e.srcElement.offsetParent !== sortRef.current) {
+    const handleClickOutside = (e:MouseEvent) => {
+      const _event=e.target as HTMLElement;
+      const eventParent=_event?.parentElement;
+      if (sortRef.current&&eventParent!==sortRef.current) {
         setIsVisible(false);
       }
     };
@@ -37,8 +40,8 @@ export default function Sort() {
     };
   }, []);
   return (
-    <div ref={sortRef} className="sort">
-      <div className="sort__label">
+    <div  className="sort">
+      <div className="sort__label" ref={sortRef}>
         <svg
           width="10"
           height="6"
