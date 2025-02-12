@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
-import { CartItemType } from './cartSlice';
 const baseUrl = 'https://6671410ce083e62ee43abe0a.mockapi.io/items';
 
 export type Pizza= {
