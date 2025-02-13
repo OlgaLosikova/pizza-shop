@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../store';
+
 const baseUrl = 'https://6671410ce083e62ee43abe0a.mockapi.io/items';
 
 export type Pizza= {
@@ -12,13 +13,26 @@ sizes:number[];
 types:number[];
 rating:number;
 }
-interface PizzaSliceState {
-  items:Pizza[];
-  status:'loading' | 'success'| 'error'
 
+export enum Status {
+  LOADING='loading',
+  SUCCESS='success',
+  ERROR='error'
 }
 
-export const fetchData = createAsyncThunk<Pizza[], Record<string, string>>('pizza/fetchDataStatus', async (params) => {
+interface PizzaSliceState {
+  items:Pizza[];
+  status:Status;
+}
+export type SearchPizzaParams={
+  sortBy:string;
+  order:string;
+  category:string;
+  search:string;
+  currentPage:string;
+}
+
+export const fetchData = createAsyncThunk<Pizza[], SearchPizzaParams>('pizza/fetchDataStatus', async (params) => {
   const { order, sortBy, category, search, currentPage } = params;
   const { data } = await axios.get(
     `${baseUrl}?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
@@ -28,7 +42,7 @@ export const fetchData = createAsyncThunk<Pizza[], Record<string, string>>('pizz
 });
 const initialState:PizzaSliceState = {
   items: [],
-  status: 'loading',
+  status: Status.LOADING,
 };
 
 const pizzaSlice = createSlice({
@@ -43,14 +57,14 @@ const pizzaSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.items = action.payload;
-      state.status = 'success';
+      state.status = Status.SUCCESS;
     });
     builder.addCase(fetchData.rejected, (state) => {
-      state.status = 'error';
+      state.status = Status.ERROR;
       state.items = [];
     });
     builder.addCase(fetchData.pending, (state) => {
-      state.status = 'loading';
+      state.status = Status.LOADING;
       state.items = [];
     });
   },
