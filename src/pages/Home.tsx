@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +28,9 @@ const Home: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const onClickCategory = (id: number) => {
+  const onClickCategory = React.useCallback((id: number) => {
     dispatch(setCategotyId(id));
-  };
+  }, [])
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
         currentPage: String(currentPage),
       }),
     );
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   };
 
   //Если был первый рендер и изменили параметры url, вшиваем параметры в url
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     // window.scrollTo(0, 0);
     // if (!isSearch.current) {
-      fetchPizza();
+    fetchPizza();
     //}
     //isSearch.current = false;
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
@@ -102,7 +102,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} onClickCategory={(id: number) => onClickCategory(id)} />
-        <Sort />
+        <Sort value={sort}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
