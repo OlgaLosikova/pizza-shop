@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LogoSvg from '../components/assets/img/pizza-logo.svg';
 import Search from './Search';
-import { selectCart } from '../store/slices/cartSlice';
+import { selectCart } from '../store/cart/selector';
 export default function Header() {
   const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce((sum: number, item: any) => (sum += item.count), 0);

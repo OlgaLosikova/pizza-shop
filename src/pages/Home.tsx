@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
-  selectFilter,
   setCategotyId,
   setCurrentPage,
   setFilters,
-
-} from '../store/slices/filterSlice';
-import { fetchData, Pizza, selectPizzaData, Status } from '../store/slices/pizzaSlice';
+} from '../store/filter/slice';
+import { selectFilter } from '../store/filter/selector';
+import { fetchData } from '../store/pizza/asyncActions';
+import { Pizza, Status } from '../store/pizza/types';
+import { selectPizzaData } from '../store/pizza/selector';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaCard from '../components/PizzaCard';

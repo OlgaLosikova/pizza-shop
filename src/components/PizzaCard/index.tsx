@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart, CartItemType, selectCartItemById } from '../../store/slices/cartSlice';
+import { addItemToCart} from '../../store/cart/slice';
+import {CartItemType} from '../../store/cart/types';
+import { selectCartItemById } from '../../store/cart/selector';
 
 type PizzaCardProps = {
   id: number;
