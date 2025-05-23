@@ -18,7 +18,6 @@ import PizzaCard from '../components/PizzaCard';
 import PizzaSkeleton from '../components/PizzaCard/Skeleton';
 import Pagination from '../components/Pagination';
 import { useAppDispatch } from '../store/store';
-
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const isSearch = useRef(false);
