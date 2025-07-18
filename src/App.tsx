@@ -4,7 +4,8 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-const Cart = lazy(() => import('./pages/Cart'));
+const Cart = lazy(() => import(/*webpackChunkName:"Cart"*/'./pages/Cart'));
+
 function App() {
   return (
     <div className="wrapper">
