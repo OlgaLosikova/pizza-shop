@@ -12,11 +12,7 @@ import { selectFilter } from '../store/filter/selector';
 import { fetchData } from '../store/pizza/asyncActions';
 import { Pizza, Status } from '../store/pizza/types';
 import { selectPizzaData } from '../store/pizza/selector';
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import PizzaCard from '../components/PizzaCard';
-import PizzaSkeleton from '../components/PizzaCard/Skeleton';
-import Pagination from '../components/Pagination';
+import { Categories,Sort,PizzaCard,PizzaSkeleton, Pagination } from "../components/index";
 import { useAppDispatch } from '../store/store';
 const Home: React.FC = () => {
   const navigate = useNavigate();

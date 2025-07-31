@@ -12,7 +12,7 @@ type PizzaCardProps = {
   sizes: number[];
   types: number[];
 };
-const PizzaCard: React.FC<PizzaCardProps> = ({ id, title, price, imageUrl, sizes, types }) => {
+export const PizzaCard: React.FC<PizzaCardProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   const [activeType, setActiveType] = useState<number>(0);
   const [activeSize, setActiveSize] = useState(0);
   const typeNames = ['тонкое', 'традиционное'];
@@ -82,4 +82,4 @@ const PizzaCard: React.FC<PizzaCardProps> = ({ id, title, price, imageUrl, sizes
     </div>
   );
 };
-export default PizzaCard;
+

@@ -1,11 +1,11 @@
-import { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../store/filter/slice';
 
-const Search = () => {
+export const Search:React.FC = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState('');
 
@@ -68,4 +68,4 @@ const Search = () => {
     </div>
   );
 };
-export default Search;
+

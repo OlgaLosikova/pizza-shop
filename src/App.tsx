@@ -1,9 +1,9 @@
 import './scss/app.scss';
-import Header from './components/Header';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
 import { Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import {Header} from './components/index'
 const Cart = lazy(() => import(/*webpackChunkName:"Cart"*/'./pages/Cart'));
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
+          {/* <Route path="pizza/:id" element={<PizzaCard/>}/> */}
           <Route path="/cart" element={<Suspense fallback={<div>Загрузка корзины...</div>}><Cart /></Suspense>} />
         </Routes>
       </div>

@@ -3,7 +3,7 @@ type CategoriesProps = {
   categoryId: number;
   onClickCategory: (i: number) => void;
 };
-const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onClickCategory }) => {
+export const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onClickCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
@@ -22,4 +22,4 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ categoryId, onClickC
   );
 }
 )
-export default Categories;
+
