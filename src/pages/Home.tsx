@@ -1,24 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import qs from 'qs';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
 import {
   setCategotyId,
-  setCurrentPage,
-  setFilters,
+  setCurrentPage
 } from '../store/filter/slice';
 import { selectFilter } from '../store/filter/selector';
 import { fetchData } from '../store/pizza/asyncActions';
 import { Pizza, Status } from '../store/pizza/types';
 import { selectPizzaData } from '../store/pizza/selector';
-import { Categories,Sort,PizzaCard,PizzaSkeleton, Pagination } from "../components/index";
+import { Categories, Sort, PizzaCard, PizzaSkeleton, Pagination } from "../components/index";
 import { useAppDispatch } from '../store/store';
 const Home: React.FC = () => {
-  const navigate = useNavigate();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
-
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
@@ -48,46 +40,8 @@ const Home: React.FC = () => {
     );
     window.scrollTo(0, 0);
   };
-
-  //Если был первый рендер и изменили параметры url, вшиваем параметры в url
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     const params = {
-  //       categoryId: categoryId > 0 ? categoryId : null,
-  //       sortProperty: sort.sortProperty,
-  //       currentPage,
-  //     };
-  //     const queryString = qs.stringify(params, { skipNulls: true });
-  //     navigate(`/?${queryString}`);
-  //   }
-  //   if (window.location.search) {
-  //     dispatch(fetchData({} as SearchPizzaParams));
-  //   }
-  // }, []);
-
-  //Если был первый рендер, то проверяем существуют ли url параметры и сохраняем в редаксе
-  // useEffect(() => {
-  //   if (window.location.search) {
-  //     const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
-  //     const sort = sortItems.find((obj) => obj.sortProperty === params.sortBy);
-
-  //     dispatch(setFilters({
-  //       searchValue: params.search,
-  //       categoryId: Number(params.category),
-  //       currentPage: Number(params.currentPage),
-  //       sort: sort || sortItems[0]
-  //     }));
-  //     isSearch.current = true;
-  //   }
-  // }, [categoryId, sort.sortProperty, currentPage]);
-
-  //Если был первый рендер запрашиваем пиццы
   useEffect(() => {
-    // window.scrollTo(0, 0);
-    // if (!isSearch.current) {
     fetchPizza();
-    //}
-    //isSearch.current = false;
   }, [categoryId, sort.sortProperty, currentPage, searchValue]);
 
   const pizzas = items.map(
@@ -98,7 +52,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories categoryId={categoryId} onClickCategory={(id: number) => onClickCategory(id)} />
-        <Sort value={sort}/>
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (
